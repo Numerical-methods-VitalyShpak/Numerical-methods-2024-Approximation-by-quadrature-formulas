@@ -1,0 +1,575 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8x]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage[left=3cm,right=15mm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{setspace}
+\usepackage{amsmath}
+
+
+
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\thispagestyle{empty}
+			\large{МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ}
+			
+			\large{ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ АВТОНОМНОЕ ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ}
+			
+			\large{«КАЗАНСКИЙ (ПРИВОЛЖСКИЙ) ФЕДЕРАЛЬНЫЙ УНИВЕРСИТЕТ»}
+			
+			\large{Институт вычислительной математики и информационных технологий}
+			
+			\large{Кафедра прикладной математики и искусственного  интеллекта}\\[50mm]
+			
+			\large{\textbf{ОТЧЕТ}}
+			
+			\large{Исследование приближения функций при помощи квадратурных формул}\\[90mm]
+			
+			\begin{flushright}
+				
+				Выполнил:
+				
+				студент группы 09-222 Шпак В.С.
+				
+				Проверил:
+				
+				ассистент Глазырина О.В.
+				
+			\end{flushright}
+			
+			\vfill
+			
+			{\large Казань, 2024 год}
+			
+		\end{center}
+		
+	\end{titlepage}
+	
+	\newpage %тут сделать оглавление
+	\setcounter{page}{2} 
+	
+	\tableofcontents
+	
+	{\setstretch{1.5}
+	
+	\begin{center}
+		\chapter*{ПОСТАНОВКА ЗАДАЧИ}
+				\addcontentsline{toc}{chapter}{ПОСТАНОВКА ЗАДАЧИ}
+	\end{center}
+	
+	Одна из специализированных функций математической физики – интегральный синус, определяется следующим образом
+	Si(x) = $\displaystyle\int\limits_{0}^{x} \frac{sin t}{t} \,dx$
+	
+	Для вычисления погрешности нам понадобиться ее вычислить разложение в ряд Тейлора 
+    
+    Si(x) = $\displaystyle\frac{(-1)^n x^{2n+1}}{(2n+1)(2n+1)!}$
+
+	Цель задания – вычислить интеграл с помощью квадратурных формул.
+
+	\begin{enumerate}
+		\item Левых прямоугольников 
+		
+		\item Правых прямоугольников 			
+			
+		\item Трапеции
+			
+		\item Симпсона  
+			
+		\item Гаусса
+			
+		\item Центральных прямоугольников
+			
+	\end{enumerate}
+	где $h = (x_{i+1}-\ x_i), \;f(x)=\displaystyle\frac{sin(x)}{x}$ ;
+	
+	\begin{center}
+		\chapter*{ХОД РАБОТЫ}
+		\addcontentsline{toc}{chapter}{ХОД РАБОТЫ}
+	\end{center}
+	
+	Найдем разложение интегрального синуса в ряд Тейлора. Для этого воспользуемся разложением функции синуса в ряд Тейлора
+	
+	Si(x) = $\displaystyle\int\limits_{0}^{x} \frac{sin t}{t} dt = \int\limits_{0}^{x} \frac{\sum_{0}^{∞} \frac{(-1)^{n} t ^ {2n}}{(2n + 1)!}}{t}dt = \sum_{0}^{∞} \frac{(-1)^n x^{2n+1}}{(2n+1)(2n+1)!}$
+
+	Для каждой точки из ряда Тейлора будем вычислять значение до тех пор пока не выполнится условие {|\ J}$_N\left(x\right)-\ J_{2N}\left(x\right)\ |<\ \varepsilon$. Далее находим погрешность как модуль разности полученного данным методом значения и найденного через разложение в ряд Тейлора. Составляем таблицу, где $J_0(x)$ - найденное значение интеграла, $J_N(x)$ - настоящее значение интеграла, N - количество разбиений отрезка.
+	
+	\noindent \\Составная квадратурная формула левых прямоугольников:
+	\newline
+	 $J_N\left(x\right)=\displaystyle\sum_{i=0}^{n-1}h\ f(x_i)$ \\
+	
+	\begin{center}
+		\begin{tabular}{ | l | l | l | l | l | }
+			\hline
+			$x_i$	& $J_0(x)$	& $J_N(x)$	& ${|\ J}_0\left(x\right)-\ J_N\left(x\right)\ |$ &	N \\
+			\hline
+			0.4     & 0.396461  &  0.396462 &    6.45907e-07                                  & 8192\\
+			\hline
+		    0.8     & 0.772096  & 0.772096  & 6.30325e-07                                     & 65536\\
+		    \hfill
+		    1.2     & 1.10805   & 1.10805   & 5.11225e-07                                     & 262144\\
+		    \hline
+		    1.6     & 1.38918   & 1.38918   & 5.78119e-07                                     & 524288\\
+		    \hline
+		    2       & 1.60541   & 1.60541   & 5.18438e-07                                     & 1048576\\
+		    \hline
+		    2.4     & 1.75249   & 1.75249   & 8.22808e-07                                     & 1048576\\
+		    \hline
+		    2.8     & 1.8321    & 1.8321    & 5.94216e-07                                     & 2097152\\
+		    \hline
+		    3.2     & 1.8514    & 1.8514    & 7.75135e-07                                     & 2097152\\
+		    \hline
+		    3.6     & 1.82195   & 1.82195   & 9.48196e-07                                     & 2097152\\
+		    \hline
+		    4       & 1.7582    & 1.7582    & 5.71039e-07                                     & 4194304\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\vspace*{1.5cm}
+	\noindent \\Составная квадратурная формула правых прямоугольников:
+	\newline
+	$J_N\left(x\right)=\displaystyle\sum_{i=1}^{n}h\ f(x_i)$\\
+	
+	\begin{center}
+		\begin{tabular}{ | l | l | l | l | l | }
+			\hline
+			$x_i$	& $J_0(x)$	& $J_N(x)$	& ${|\ J}_0\left(x\right)-\ J_N\left(x\right)\ |$	& N \\
+			\hline
+			0.4     & 0.396461  & 0.396461  & 6.45799e-07                                       & 8192\\
+			\hline
+			0.8     & 0.772096  & 0.772095  & 6.30721e-07                                       & 65536\\
+			\hline
+			1.2     & 1.10805   & 1.10805   & 5.10965e-07                                       & 262144\\
+			\hline
+			1.6     & 1.38918   & 1.38918   & 5.67104e-07                                       & 524288\\
+			\hline
+			2       & 1.60541   & 1.60541   & 5.21737e-07                                       & 1048576\\
+			\hline
+			2.4     & 1.75249   & 1.75248   & 8.21838e-07                                       & 1048576\\
+			\hline
+			2.8     & 1.8321    & 1.8321    & 5.81193e-07                                       & 2097152\\
+			\hline
+			3.2     & 1.8514    & 1.8514    & 7.78579e-07                                       & 2097152\\
+			\hline
+			3.6     & 1.82195   & 1.82195   & 9.79428e-07                                       & 2097152\\
+			\hline
+			4       & 1.7582    & 1.7582    & 5.63072e-07                                       & 4194304\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\noindent \\Составная квадратурная формула центральных прямоугольников:
+	\newline
+	 $J_N\displaystyle\left(x\right)=\sum_{i=0}^{n-1}h\ \ f\left(\frac{x_i+\ x_{i+1}}{2}\right)$ \\
+	
+	\begin{center}
+		\begin{tabular}{ | l | l | l | l | l | }
+			\hline
+			$x_i$	& $J_0(x)$	& $J_N(x)$	& ${|\ J}_0\left(x\right)-\ J_N\left(x\right)\ |$	& N\\
+			\hline                       
+			0.8 	& 0.772096	& 0.772096	& 1.01524e-07                                 		& 256\\
+			\hline
+			1.2 	& 1.10805	& 1.10805	& 3.16249e-07	                                 	& 256\\
+			\hline
+			1.6 	& 1.38918	& 1.38918	& 1.71809e-07	                                 	& 512\\
+			\hline
+			2   	& 1.60541	& 1.60541	& 2.75169e-07	                                 	& 512\\
+			\hline
+			2.4 	& 1.75249	& 1.75249	& 9.76376e-08	                                 	& 1024\\
+			\hline
+			2.8 	& 1.8321	& 1.8321	& 1.24621e-07	                                 	& 1024\\
+			\hline
+			3.2 	& 1.8514	& 1.8514	& 1.22943e-07	                                 	& 1024\\
+			\hline
+			3.6 	& 1.82195	& 1.82195	& 9.50707e-08	                                 	& 1024\\
+			\hline
+			4   	& 1.7582	& 1.7582	& 2.99268e-07	                                 	& 512\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\noindent \\Составная квадратурная формула трапеции:
+	\newline
+	 $J_N\left(x\right)=\displaystyle\sum_{i=0}^{n-1}h\ \ \frac{f\left(x_i\right)+f\left(x_{i+1}\right)}{2}$\\
+	
+	\begin{center}
+		\begin{tabular}{ | l | l | l | l | l | }
+			\hline
+			$x_i$	& $J_0(x)$	& $J_N(x)$	& ${|\ J}_0\left(x\right)-\ J_N\left(x\right)\ |$	& N \\
+			\hline
+			0.4	    & 0.396461	& 0.396461	& 1.06701e-07	                                    & 128\\
+		    \hline
+			0.8	    & 0.772096	& 0.772096	& 2.03634e-07	                                    & 256\\
+			\hline
+			1.2	    & 1.10805	& 1.10805	& 1.57927e-07	                                    & 512\\
+			\hline
+			1.6	    & 1.38918	& 1.38918	& 3.27103e-07	                                    & 512\\
+			\hline
+			2	    & 1.60541	& 1.60541	& 1.40058e-07	                                    & 1024\\
+			\hline
+			2.4	    & 1.75249	& 1.75249	& 1.93854e-07	                                    & 1024\\
+			\hline
+			2.8	    & 1.8321	& 1.8321	& 2.29813e-07	                                    & 1024\\
+			\hline
+			3.2	    & 1.8514	& 1.8514	& 2.50917e-07	                                    & 1024\\
+			\hline
+			3.6	    & 1.82195	& 1.82195	& 2.37024e-07	                                    & 1024\\
+			\hline
+			4	    & 1.7582	& 1.7582	& 1.43659e-07	                                    & 1024\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\noindent \\Составная квадратурная формула Симпсона:
+	\newline 
+	$J_N\left(x\right)=\displaystyle\sum_{i=0}^{n-1}\frac{h}{6}\ \ \left[f\left(x_i\right)+4f\left(\frac{x_i+\ x_{i+1}}{2}\right)+f\left(x_{i+1}\right)\right]\ \ $\\
+	
+	Формула для полинома Лагранжа:
+	\begin{equation}
+		L_n(x) = \sum_{i=0}^{n}f(x_i)\prod_{i \ne j, j = 0}^{n}\frac{x - x_j}{x_i - x_j}
+    \end{equation}
+    
+    По трём узлам $(x_1 = a, x_2 = \dfrac{a+b}{2}, x_3 = b):
+    L_2 = f(a)\left(\dfrac{x - \dfrac{a+b}{2}}{a - \dfrac{a+b}{2}}\right)\left(\dfrac{x - b}{a - b}\right)+\\
+    f\left(\dfrac{a +b}{2}\right)\left(\dfrac{x-a}{\dfrac{a+b}{2} - a}\right)\left(\dfrac{x-b}{\dfrac{a+b}{2} - b}\right)+ f(b)\left(\dfrac{x - \dfrac{a+b}{2}}{b - \dfrac{a+b}{2}}\right)\left(\dfrac{x - b}{b - a}\right).$\\
+    \hfill\break
+    Проинтегрируем выражение по интервалу [a,b]:
+    
+    \begin{equation}
+    	\int\limits_{a}^{b}L_2(x)\mathrm{d}x = f(a)c_1 + f\left(\frac{a+b}{2}\right)c_2 + f(b)c_3
+    \end{equation}
+    где $c_1 = \dfrac{b-a}{6}, c_2 = \dfrac{2}{3}(b - a), c_3 = \dfrac{b-a}{6}.$\\
+    \hfill\break
+    Тогда:
+    \begin{equation}
+    	\int\limits_{a}^{b}L_2(x)\mathrm{d}x = \frac{b-a}{6}\left(f(a) + 4f\left(\frac{a+b}{2}\right)+f(b)\right)
+    \end{equation}
+	
+	\begin{center}
+		\begin{tabular}{ | l | l | l | l | l | }
+			\hline
+			$x_i$	& $J_0(x)$	& $J_N(x)$	& ${|\ J}_0\left(x\right)-\ J_N\left(x\right)\ |$	& N\\
+			\hline
+			0.4  	& 0.396461	& 0.396461	& 2.80595e-09	                                    & 4\\
+			\hline
+			0.8 	& 0.772096	& 0.772096	& 4.94881e-09	                                    & 8\\
+			\hline
+			1.2 	& 1.10805	& 1.10805	& 3.54972e-08	                                    & 8\\
+			\hline
+			1.6 	& 1.38918	& 1.38918	& 1.35524e-08	                                    & 16\\
+			\hline
+			2   	& 1.60541	& 1.60541	& 1.84437e-08	                                    & 16\\
+			\hline
+			2.4 	& 1.75249	& 1.75249	& 3.86081e-08	                                    & 16\\
+			\hline
+			2.8 	& 1.8321	& 1.8321	& 6.33216e-08	                                    & 16\\
+			\hline
+			3.2 	& 1.8514	& 1.8514	& 6.24795e-08	                                    & 16\\
+			\hline
+			3.6 	& 1.82195	& 1.82195	& 2.6337e-08	                                    & 16\\
+			\hline
+			4   	& 1.7582	& 1.7582	& 2.6013e-08	                                    & 16\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\noindent \\Составная квадратурная формула Гаусса:
+	\newline
+	 $J_N\left(x\right)=\displaystyle\sum_{i=0}^{n-1}\frac{h}{2}\ \ \left [f\left(x_i+\frac{h}{2}\ \ (1-\frac{1}{\sqrt3})\right)+f\left(x_i+\frac{h}{2}\ \ (1+\frac{1}{\sqrt3})\right)\right]$\\
+	
+	\begin{center}
+		\begin{tabular}{ | l | l | l | l | l | }
+			\hline
+			$x_i$	& $J_0(x)$	& $J_N(x)$	& ${|\ J}_0\left(x\right)-\ J_N\left(x\right)\ |$	& N\\
+			\hline
+			0.4	    & 0.396461	& 0.396461	& 1.73704e-09	                                    & 4\\
+			\hline
+			0.8 	& 0.772096	& 0.772096	& 5.50997e-08	                                    & 4\\
+			\hline
+			1.2 	& 1.10805	& 1.10805	& 2.34466e-08	                                    & 8\\
+			\hline
+			1.6 	& 1.38918	& 1.38918	& 1.40096e-10	                                    & 16\\
+			\hline
+			2   	& 1.60541	& 1.60541	& 1.50446e-08	                                    & 16\\
+			\hline
+			2.4 	& 1.75249	& 1.75249	& 2.49499e-08	                                    & 16\\
+			\hline
+			2.8 	& 1.8321	& 1.8321	& 3.14221e-08	                                    & 16\\
+			\hline
+			3.2 	& 1.8514	& 1.8514	& 4.44494e-08	                                    & 16\\
+			\hline
+			3.6 	& 1.82195	& 1.82195	& 4.36041e-08	                                    & 16\\
+			\hline
+			4	    & 1.7582	& 1.7582	& 2.39866e-08	                                    & 16\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\begin{center}
+		\chapter*{ВЫВОДЫ ПО РАБОТЕ}:
+		\addcontentsline{toc}{chapter}{ВЫВОДЫ ПО РАБОТЕ}
+	\end{center}
+	
+	Из представленных 6 методов самыми эффективными оказались методы Гаусса и Симпсона. Для метода Гаусса потребовалось меньше итераций, следовательно, он является самым результативным.
+	
+	\begin{center}
+		\chapter*{ЛИСТИНГ}
+		\addcontentsline{toc}{chapter}{ЛИСТИНГ}
+	\end{center}
+}
+	\fontsize{10}{12}\selectfont
+	
+	\#include <iostream>
+	
+	\#include <Math.h>
+	
+	\#include <string>
+	
+	\#include <vector>
+	\newline 
+	
+	static double step = 0.4;
+	
+	static double Limit(double x)
+	
+    \{
+    
+		\hspace{1cm}if (x != 0) return (sin(x) / x);
+		
+		\hspace{1cm}return 1; //первый замечательный предел
+		
+	\}\newline 
+	
+	static double Tabulate(double x)
+	
+	\{
+	
+		\hspace{1cm}double a = x;
+	
+		\hspace{1cm}double res = x;
+	
+		\hspace{1cm}double q;
+	
+		\hspace{1cm}int n = 0;
+	
+		\hspace{1cm}do
+	
+		\hspace{1cm}\{
+		
+			\hspace{2cm}q = (-1) * x * x * (2 * n + 1) / ((2 * n + 2) * (2 * n + 3) * (2 * n + 3));
+		
+			\hspace{2cm}a *= q;
+		
+			\hspace{2cm}res += a;
+		
+			\hspace{2cm}n++;
+		
+		\hspace{1cm}\} while (abs(a) > 0.000001);
+		
+		\hspace{1cm}return res;
+	
+	\}
+	
+	static std::vector<double> Tabulate(std::vector<double> x)
+	
+	\{
+	
+		\hspace{1cm}std::vector<double> result;
+	
+		\hspace{1cm}for (int i = 0; i < x.size(); i++)
+	
+		\hspace{1cm}\{
+	
+			\hspace{2cm}$result.push_back(Tabulate(x[i]));$
+	
+		\hspace{1cm}\}
+	
+		\hspace{1cm}return result;
+	
+	\}
+	
+	$static double Left_Rectangle_Method(int N, double x0)$
+	
+	\{
+	
+		\hspace{1cm}double h = x0 / N;
+	
+		\hspace{1cm}double result = 0;
+	
+		\hspace{1cm}double x = 0;
+	
+		\hspace{1cm}for (int i = 0; i < N; i++)
+	
+		\hspace{1cm}\{
+		
+			\hspace{2cm}result += h * Limit(x);
+		
+			\hspace{2cm}x += h;
+		
+		\hspace{1cm}\}
+		
+		\hspace{1cm}return result;
+	
+	\}
+	
+	$static double Right_Rectangle_Method(int N, double x0)$
+	
+	\{
+	
+		\hspace{1cm}double h = x0 / N;
+	
+		\hspace{1cm}double sum = 0;
+	
+		\hspace{1cm}double x = h;
+	
+		\hspace{1cm}for (int i = 0; i < N; i++)
+	
+		\hspace{1cm}\{
+	
+			\hspace{2cm}sum += h * Limit(x);
+	
+			\hspace{2cm}x += h;
+	
+		\hspace{1cm}\}
+	
+		\hspace{1cm}return sum;
+	
+	\}
+	
+	$static double Central_Rectangles_Method(int N, double x0)$
+	
+	\{
+	
+		\hspace{1cm}double h = x0 / N;
+	
+		\hspace{1cm}double sum = 0;
+	
+		\hspace{1cm}double x = h / 2;
+	
+		\hspace{1cm}for (int i = 0; i < N; i++)
+	
+		\hspace{1cm}\{
+	
+			\hspace{2cm}sum += h * Limit(x);
+	
+			\hspace{2cm}x += h;
+	
+		\hspace{1cm}\}
+	
+		\hspace{1cm}return sum;
+	
+	\}
+	
+	$static double Simpson_method(int N, double x0)$
+	
+	\{
+	
+		\hspace{1cm}double h = x0 / N;
+	
+		\hspace{1cm}double sum = 0;
+	
+		\hspace{1cm}double x = 0;
+	
+		\hspace{1cm}for (int i = 0; i < N; i++)
+	
+		\hspace{1cm}\{
+	
+			\hspace{2cm}sum += (Limit(x) + 4 * Limit(x + h / 2) + Limit(x + h)) * h / 6;
+	
+			\hspace{2cm}x += h;
+	
+		\hspace{1cm}\}
+	
+		\hspace{1cm}return sum;
+	
+	\}
+	
+	$static double Trapezoid_method(int N, double x0)$
+	
+	\{
+	
+		\hspace{1cm}double h = x0 / N;
+	
+		\hspace{1cm}double result = 0;
+	
+		\hspace{1cm}double x = 0;
+	
+		\hspace{1cm}for (int i = 0; i < N; i++)
+	
+		\hspace{1cm}\{
+	
+			\hspace{2cm}result += h * (Limit(x) + Limit(x + h)) / 2;
+	
+			\hspace{2cm}x += h;
+	
+		\hspace{1cm}\}
+	
+		\hspace{1cm}return result;
+	
+	\}
+	
+	$static double Gauss_method(int N, double x0)$
+	
+	\{
+	
+		\hspace{1cm}double h = x0 / N;
+	
+		\hspace{1cm}double ad1 = (1 - 1.0 / sqrt(3)) * h / 2;
+	
+		\hspace{1cm}double ad2 = (1 + 1.0 / sqrt(3)) * h / 2;
+	
+		\hspace{1cm}double sum = 0;
+	
+		\hspace{1cm}double x = 0;
+	
+		\hspace{1cm}for (int i = 0; i < N; i++)
+	
+		\hspace{1cm}\{
+	
+			\hspace{2cm}sum += (Limit(x + ad1) + Limit(x + ad2)) * h / 2;
+	
+			\hspace{2cm}x += h;
+	
+		\hspace{1cm}\}
+	
+		\hspace{1cm}return sum;
+	
+	\}
+	
+	$static void CalculateAndWrite(double x, double y, double (*Integtal_Variant)(int, double))$
+	
+	\{
+	
+		\hspace{1cm}double lastJ = 0;
+	
+		\hspace{1cm}double J = 0;
+	
+		\hspace{1cm}int n = 1;
+	
+		\hspace{1cm}do
+	
+		\hspace{1cm}\{
+	
+			\hspace{2cm}if (n == 1024) 
+	
+			\hspace{2cm}\{
+	
+				\hspace{3cm}break;
+	
+			\hspace{2cm}\}
+	
+			\hspace{2cm}n *= 2;
+	
+			\hspace{2cm}lastJ = J;
+	
+			\hspace{2cm}$J = Integtal_Variant(n, x);$
+	
+		\hspace{1cm}\} $while (abs(lastJ - J) > 0.000001);$
+	
+		\hspace{1cm}$double error = abs(J - y);$
+	
+		\hspace{1cm}$std::cout << "|| " << x << " \slash t|| " << y << " \slash t|| " << J << " \slash t|| " << error << " \slash t|| " << n << "\slash n";$
+	
+	\}
+
+\end{document}
